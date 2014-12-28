@@ -1,0 +1,206 @@
+﻿<Application x:Class="UsingTask.UI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:UsingTask.UI"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!-- Value Converters -->
+        <local:DecadeConverter x:Key="myDecadeConverter"/>
+        <local:RatingConverter x:Key="myRatingConverter"/>
+        <local:RatingStarConverter x:Key="myRatingStarConverter"/>
+        <local:DecadeBrushConverter x:Key="myDecadeBrushConverter"/>
+
+        <!-- Application Brushes -->
+        <SolidColorBrush x:Key="ApplicationBackground" Color="LightGray"/>
+        <SolidColorBrush x:Key="ApplicationForeground" Color="DarkGray"/>
+        <SolidColorBrush x:Key="ApplicationTextForeground" Color="DarkSlateGray"/>
+        <SolidColorBrush x:Key="ApplicationHighlight" Color="White"/>
+
+        <ControlTemplate TargetType="Button" x:Key="GoButton">
+            <Grid>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <Storyboard>
+                                <ColorAnimation Duration="0:0:0"
+                                                Storyboard.TargetName="ButtonBackgroundBrush"
+                                                Storyboard.TargetProperty="Color" To="{TemplateBinding Background}"/>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="MouseOver">
+                            <Storyboard>
+                                <ColorAnimation Duration="0:0:0"
+                                                Storyboard.TargetName="ButtonBackgroundBrush"
+                                                Storyboard.TargetProperty="Color" To="LightSlateGray"/>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <Storyboard>
+                                <ColorAnimation Duration="0:0:0"
+                                                Storyboard.TargetName="ButtonBackgroundBrush"
+                                                Storyboard.TargetProperty="Color" To="White"/>
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Border BorderBrush="{TemplateBinding Foreground}"
+                        BorderThickness="1"
+                        Padding="10">
+                    <Border.Background>
+                        <SolidColorBrush x:Name="ButtonBackgroundBrush" 
+                                         Color="{TemplateBinding Background}" />
+                    </Border.Background>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentPresenter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+                                          HorizontalAlignment="Left" />
+                        <Canvas Grid.Row="1" Grid.Column="1" Width="52" Height="52" 
+                                HorizontalAlignment="Right">
+                            <Path x:Name="Path_20" Width="30.0044" Height="24.936" Canvas.Left="9.52478" 
+                                  Canvas.Top="13.3913" Stretch="Fill" Opacity="0.5" Fill="{TemplateBinding Foreground}"
+                                  Data="F1 M 39.1582,27.0767C 39.1888,27.0313 39.2181,26.9873 39.2462,26.938C 39.2755,26.886 39.2982,26.834 39.3821,26.65C 39.4061,26.594 39.4208,26.5366 39.4395,26.478C 39.4529,26.4313 39.4675,26.3846 39.4781,26.3367C 39.4915,26.2806 39.4995,26.2233 39.5074,26.1673C 39.5155,26.118 39.5195,26.0699 39.5248,26.022C 39.5302,25.9633 39.5302,25.9047 39.5275,25.8459C 39.5275,25.7993 39.5302,25.7526 39.5248,25.7059C 39.5222,25.6447 39.5128,25.5846 39.5049,25.5247C 39.4968,25.4793 39.4915,25.4353 39.4808,25.3887C 39.4675,25.33 39.4502,25.2713 39.4315,25.214C 39.4182,25.1673 39.4061,25.1233 39.3168,24.9153C 39.2942,24.8713 39.2728,24.8273 39.2488,24.7833C 39.2208,24.7313 39.1862,24.6807 39.0728,24.5167C 39.0328,24.4673 38.9915,24.4207 38.8902,24.3073L 28.6194,14.0353C 27.7595,13.1766 26.3715,13.1766 25.5154,14.0353C 24.6581,14.89 24.6581,16.2806 25.5154,17.1366L 32.0435,23.6633L 11.7208,23.6633C 10.9634,23.6633 10.2942,24.0473 9.90076,24.6313C 9.66345,24.982 9.52478,25.4033 9.52478,25.8593C 9.52478,26.4647 9.77014,27.0126 10.1688,27.41C 10.5648,27.8087 11.1141,28.0527 11.7208,28.0527L 32.0435,28.0527L 25.5154,34.5793C 24.6581,35.4366 24.6581,36.826 25.5154,37.6819C 25.9448,38.1113 26.5048,38.3273 27.0674,38.3273C 27.6301,38.3273 28.1888,38.1126 28.6194,37.6846L 38.9529,27.3406C 38.9915,27.2966 39.0328,27.2513 39.0701,27.2033C 39.1008,27.162 39.1302,27.1193 39.1582,27.0767 Z "/>
+                            <Path x:Name="Path_21" Width="51.7188" Height="51.7187" Canvas.Left="0" 
+                                  Canvas.Top="0" Stretch="Fill" Opacity="0.5" Fill="{TemplateBinding Foreground}"
+                                  Data="F1 M 25.8613,47.94C 13.6866,47.94 3.78003,38.0333 3.78003,25.86C 3.78003,13.6866 13.6866,3.78131 25.8613,3.78131C 38.0333,3.78131 47.94,13.6866 47.94,25.86C 47.94,38.0333 38.0333,47.94 25.8613,47.94 Z M 25.8587,0C 11.5774,0 0,11.5759 0,25.8586C 0,40.14 11.5774,51.7187 25.8587,51.7187C 40.14,51.7187 51.7188,40.14 51.7188,25.8586C 51.7188,11.5759 40.14,0 25.8587,0 Z "/>
+                        </Canvas>
+                    </Grid>
+                </Border>
+            </Grid>
+        </ControlTemplate>
+
+        <Style TargetType="Button" x:Key="GoButtonStyle">
+            <Setter Property="Foreground" Value="{StaticResource ApplicationTextForeground}"/>
+            <Setter Property="Background" Value="{StaticResource ApplicationBackground}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="7,3"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Template" Value="{StaticResource GoButton}" />
+        </Style>
+
+        <!-- ClearButton Control Template / Style -->
+        <ControlTemplate TargetType="Button" x:Key="ClearButton">
+            <Grid>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <Storyboard>
+                                <ColorAnimation Duration="0:0:0"
+                                                Storyboard.TargetName="ButtonBackgroundBrush"
+                                                Storyboard.TargetProperty="Color" To="{TemplateBinding Background}"/>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="MouseOver">
+                            <Storyboard>
+                                <ColorAnimation Duration="0:0:0"
+                                                Storyboard.TargetName="ButtonBackgroundBrush"
+                                                Storyboard.TargetProperty="Color" To="LightSlateGray"/>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <Storyboard>
+                                <ColorAnimation Duration="0:0:0"
+                                                Storyboard.TargetName="ButtonBackgroundBrush"
+                                                Storyboard.TargetProperty="Color" To="White"/>
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Border BorderBrush="{TemplateBinding Foreground}"
+                        BorderThickness="1"
+                        Padding="10">
+                    <Border.Background>
+                        <SolidColorBrush x:Name="ButtonBackgroundBrush" 
+                                         Color="{TemplateBinding Background}" />
+                    </Border.Background>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentPresenter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left">
+                        </ContentPresenter>
+                        <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right"
+                               Text="X " FontSize="48" Margin="0,0,0,-10"
+                               Opacity="0.5" Foreground="{TemplateBinding Foreground}" />
+                    </Grid>
+                </Border>
+            </Grid>
+        </ControlTemplate>
+
+        <Style TargetType="Button" x:Key="ClearButtonStyle">
+            <Setter Property="Foreground" Value="{StaticResource ApplicationTextForeground}"/>
+            <Setter Property="Background" Value="{StaticResource ApplicationBackground}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="7,3"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Template" Value="{StaticResource ClearButton}" />
+        </Style>
+
+        <!-- Application Styles -->
+        <Style TargetType="TextBlock" x:Key="ApplicationText">
+            <Setter Property="Foreground" Value="{StaticResource ApplicationTextForeground}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="ListItemTextStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="ListTextStyle">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+
+        <!-- List Box Data Template -->
+        <DataTemplate x:Key="PersonListTemplate">
+            <Border BorderBrush="Black"
+                Background="{Binding StartDate,
+                Converter={StaticResource myDecadeBrushConverter}}"
+                    BorderThickness="1" Width="220" Margin="3" 
+                    Padding="10,5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                        <TextBlock Text="{Binding FirstName}" 
+                                   Style="{StaticResource ListItemTextStyle}" />
+                        <TextBlock Text=" " />
+                        <TextBlock Text="{Binding LastName}" 
+                                   Style="{StaticResource ListItemTextStyle}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="1">
+                        <TextBlock Text="{Binding StartDate.Year}"
+                                   Style="{StaticResource ListTextStyle}" />
+                        <TextBlock Text="{Binding Rating,
+                                    Converter={StaticResource myRatingConverter}}"
+                                   Style="{StaticResource ListTextStyle}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Application.Resources>
+</Application>
