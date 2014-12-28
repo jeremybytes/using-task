@@ -18,6 +18,16 @@ namespace UsingTask.UI
         private void FetchWithTaskButton_Click(object sender, RoutedEventArgs e)
         {
             ClearListBox();
+            var peopleTask = repository.Get();
+            peopleTask.ContinueWith(FillListBox,
+                TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        private void FillListBox(Task<List<Person>> peopleTask)
+        {
+            var people = peopleTask.Result;
+            foreach (var person in people)
+                PersonListBox.Items.Add(person);
         }
 
         private void FetchWithAwaitButton_Click(object sender, RoutedEventArgs e)
