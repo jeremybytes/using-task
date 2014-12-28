@@ -11,8 +11,8 @@ namespace UsingTask.Tester
         static void Main(string[] args)
         {
             var repository = new PersonRepository();
-            Task<List<Person>> people = repository.Get();
-            people.ContinueWith(FillConsole);
+            Task<List<Person>> peopleTask = repository.Get();
+            peopleTask.ContinueWith(FillConsole);
             for (int i = 0; i < 5; i++)
                 Console.WriteLine(i);
             Console.ReadLine();
