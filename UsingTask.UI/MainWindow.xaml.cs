@@ -19,15 +19,13 @@ namespace UsingTask.UI
         {
             ClearListBox();
             Task<List<Person>> peopleTask = repository.Get();
-            peopleTask.ContinueWith(FillListBox,
+            peopleTask.ContinueWith(t =>
+                {
+                    List<Person> people = peopleTask.Result;
+                    foreach (var person in people)
+                        PersonListBox.Items.Add(person);
+                },
                 TaskScheduler.FromCurrentSynchronizationContext());
-        }
-
-        private void FillListBox(Task<List<Person>> peopleTask)
-        {
-            List<Person> people = peopleTask.Result;
-            foreach (var person in people)
-                PersonListBox.Items.Add(person);
         }
 
         private void FetchWithAwaitButton_Click(object sender, RoutedEventArgs e)
