@@ -28,9 +28,12 @@ namespace UsingTask.UI
                 TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private void FetchWithAwaitButton_Click(object sender, RoutedEventArgs e)
+        private async void FetchWithAwaitButton_Click(object sender, RoutedEventArgs e)
         {
             ClearListBox();
+            List<Person> people = await repository.Get();
+            foreach (var person in people)
+                PersonListBox.Items.Add(person);
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
