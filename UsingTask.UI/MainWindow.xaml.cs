@@ -44,7 +44,6 @@ namespace UsingTask.UI
                 List<Person> people = await repository.Get();
                 foreach (var person in people)
                     PersonListBox.Items.Add(person);
-
             }
             finally
             {
