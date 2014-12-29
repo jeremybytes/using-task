@@ -41,9 +41,16 @@
                                                 Storyboard.TargetProperty="Color" To="White"/>
                             </Storyboard>
                         </VisualState>
+                        <VisualState x:Name="Disabled">
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0"
+                                                Storyboard.TargetName="border"
+                                                Storyboard.TargetProperty="Opacity" To="0.3"/>
+                            </Storyboard>
+                        </VisualState>
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
-                <Border BorderBrush="{TemplateBinding Foreground}"
+                <Border x:Name="border" BorderBrush="{TemplateBinding Foreground}"
                         BorderThickness="1"
                         Padding="10">
                     <Border.Background>
