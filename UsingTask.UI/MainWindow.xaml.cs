@@ -27,7 +27,7 @@ namespace UsingTask.UI
                     foreach (var person in people)
                         PersonListBox.Items.Add(person);
                 },
-                new CancellationToken(),
+                CancellationToken.None,
                 TaskContinuationOptions.OnlyOnRanToCompletion,
                 TaskScheduler.FromCurrentSynchronizationContext());
 
