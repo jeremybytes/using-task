@@ -15,7 +15,8 @@ namespace UsingTask.Library
         {
             await Task.Delay(3000);
 
-            throw new NotImplementedException("Get operation not implemented");
+            // Uncomment to test exception handling in calling code
+            //throw new NotImplementedException("Get operation not implemented");
 
             using (var client = new HttpClient())
             {
