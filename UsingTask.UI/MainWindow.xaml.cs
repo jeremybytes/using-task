@@ -4,6 +4,7 @@ using UsingTask.Library;
 using UsingTask.Shared;
 using System.Threading.Tasks;
 using System.Threading;
+using System;
 
 namespace UsingTask.UI
 {
@@ -31,6 +32,17 @@ namespace UsingTask.UI
                 TaskContinuationOptions.OnlyOnRanToCompletion,
                 TaskScheduler.FromCurrentSynchronizationContext());
 
+            peopleTask.ContinueWith(t =>
+                {
+                    foreach (var exception in t.Exception.Flatten().InnerExceptions)
+                    {
+                        MessageBox.Show(exception.Message);
+                    }
+                },
+                CancellationToken.None,
+                TaskContinuationOptions.OnlyOnFaulted,
+                TaskScheduler.FromCurrentSynchronizationContext());
+
             peopleTask.ContinueWith(t => FetchWithTaskButton.IsEnabled = true,
                 TaskScheduler.FromCurrentSynchronizationContext());
         }
@@ -44,6 +56,10 @@ namespace UsingTask.UI
                 List<Person> people = await repository.Get();
                 foreach (var person in people)
                     PersonListBox.Items.Add(person);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
             finally
             {

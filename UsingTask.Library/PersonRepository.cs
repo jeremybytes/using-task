@@ -15,6 +15,8 @@ namespace UsingTask.Library
         {
             await Task.Delay(3000);
 
+            throw new NotImplementedException("Get operation not implemented");
+
             using (var client = new HttpClient())
             {
                 InitializeClient(client);

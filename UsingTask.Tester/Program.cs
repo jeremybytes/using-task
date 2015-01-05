@@ -12,7 +12,10 @@ namespace UsingTask.Tester
         {
             var repository = new PersonRepository();
             Task<List<Person>> peopleTask = repository.Get();
-            peopleTask.ContinueWith(FillConsole);
+            peopleTask.ContinueWith(FillConsole,
+                TaskContinuationOptions.OnlyOnRanToCompletion);
+            peopleTask.ContinueWith(ShowError,
+                TaskContinuationOptions.OnlyOnFaulted);
             for (int i = 0; i < 5; i++)
                 Console.WriteLine(i);
             Console.ReadLine();
@@ -23,6 +26,12 @@ namespace UsingTask.Tester
             List<Person> people = peopleTask.Result;
             foreach (var person in people)
                 Console.WriteLine(person.ToString());
+        }
+
+        private static void ShowError(Task<List<Person>> peopleTask)
+        {
+            foreach (var exception in peopleTask.Exception.Flatten().InnerExceptions)
+                Console.WriteLine("Error: {0}", exception.Message);
         }
     }
 }
