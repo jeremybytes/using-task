@@ -24,26 +24,20 @@ namespace UsingTask.UI
             Task<List<Person>> peopleTask = repository.Get();
             peopleTask.ContinueWith(t =>
                 {
-                    List<Person> people = t.Result;
-                    foreach (var person in people)
-                        PersonListBox.Items.Add(person);
-                },
-                CancellationToken.None,
-                TaskContinuationOptions.OnlyOnRanToCompletion,
-                TaskScheduler.FromCurrentSynchronizationContext());
-
-            peopleTask.ContinueWith(t =>
-                {
-                    foreach (var exception in t.Exception.Flatten().InnerExceptions)
+                    if(t.IsFaulted)
                     {
-                        MessageBox.Show(exception.Message);
+                        foreach (var exception in t.Exception.Flatten().InnerExceptions)
+                            MessageBox.Show(exception.Message);
                     }
-                },
-                CancellationToken.None,
-                TaskContinuationOptions.OnlyOnFaulted,
-                TaskScheduler.FromCurrentSynchronizationContext());
+                    if (t.Status == TaskStatus.RanToCompletion)
+                    {
+                        List<Person> people = t.Result;
+                        foreach (var person in people)
+                            PersonListBox.Items.Add(person);
+                    }
 
-            peopleTask.ContinueWith(t => FetchWithTaskButton.IsEnabled = true,
+                    FetchWithTaskButton.IsEnabled = true;
+                },
                 TaskScheduler.FromCurrentSynchronizationContext());
         }
 
