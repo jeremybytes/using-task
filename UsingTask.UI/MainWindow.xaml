@@ -32,6 +32,12 @@
                             Click="FetchWithAwaitButton_Click"
                             Style="{StaticResource GoButtonStyle}"/>
 
+            <Button x:Name="CancelButton" Grid.Column="0" Grid.Row="2" Margin="5"
+                            Content="Cancel Process"
+                            IsEnabled="False"
+                            Click="CancelButton_Click"
+                            Style="{StaticResource ClearButtonStyle}"/>
+
             <!-- Clear Button -->
             <Button x:Name="ClearButton"
                             Grid.Column="0" Grid.Row="4" Grid.RowSpan="2"
