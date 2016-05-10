@@ -11,14 +11,20 @@ namespace UsingTask.Library
 {
     public class PersonRepository
     {
-        public async Task<List<Person>> Get()
+        public async Task<List<Person>> Get(
+            CancellationToken cancellationToken = new CancellationToken())
         {
             await Task.Delay(3000);
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            // Uncomment to test exception handling in calling code
+            //throw new NotImplementedException("Get operation not implemented");
 
             using (var client = new HttpClient())
             {
                 InitializeClient(client);
-                HttpResponseMessage response = await client.GetAsync("api/people");
+                HttpResponseMessage response = await client.GetAsync("api/people", cancellationToken);
                 if (response.IsSuccessStatusCode)
                 {
                     return await response.Content.ReadAsAsync<List<Person>>();
