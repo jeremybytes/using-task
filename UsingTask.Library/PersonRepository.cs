@@ -12,9 +12,17 @@ namespace UsingTask.Library
     public class PersonRepository
     {
         public async Task<List<Person>> Get(
+            IProgress<int> progress,
             CancellationToken cancellationToken = new CancellationToken())
         {
-            await Task.Delay(3000);
+            progress?.Report(3);
+            await Task.Delay(1000, cancellationToken);
+
+            progress?.Report(2);
+            await Task.Delay(1000, cancellationToken);
+
+            progress?.Report(1);
+            await Task.Delay(1000, cancellationToken);
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -27,6 +35,7 @@ namespace UsingTask.Library
                 HttpResponseMessage response = await client.GetAsync("api/people", cancellationToken);
                 if (response.IsSuccessStatusCode)
                 {
+                    progress?.Report(0);
                     return await response.Content.ReadAsAsync<List<Person>>();
                 }
                 return new List<Person>();

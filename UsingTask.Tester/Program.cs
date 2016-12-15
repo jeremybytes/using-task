@@ -11,7 +11,7 @@ namespace UsingTask.Tester
         static void Main(string[] args)
         {
             var repository = new PersonRepository();
-            Task<List<Person>> peopleTask = repository.Get();
+            Task<List<Person>> peopleTask = repository.Get(null);
             peopleTask.ContinueWith(FillConsole,
                 TaskContinuationOptions.OnlyOnRanToCompletion);
             peopleTask.ContinueWith(ShowError,
