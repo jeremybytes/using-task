@@ -38,6 +38,10 @@
                             Click="CancelButton_Click"
                             Style="{StaticResource ClearButtonStyle}"/>
 
+            <TextBlock x:Name="ProgressTextBlock" Grid.Column="0" Grid.Row="3"
+                       FontSize="20" Margin="2" 
+                       VerticalAlignment="Top" HorizontalAlignment="Center"/>
+
             <!-- Clear Button -->
             <Button x:Name="ClearButton"
                             Grid.Column="0" Grid.Row="4" Grid.RowSpan="2"

@@ -12,10 +12,14 @@ namespace UsingTask.UI
     {
         PersonRepository repository = new PersonRepository();
         CancellationTokenSource tokenSource;
+        IProgress<PersonProgressData> progress;
 
         public MainWindow()
         {
             InitializeComponent();
+            progress = new Progress<PersonProgressData>(
+                d => ProgressTextBlock.Text =
+                         $"Processing: {d.Item} of {d.Total}\n {d.Name}");
         }
 
         private void FetchWithTaskButton_Click(object sender, RoutedEventArgs e)
@@ -24,7 +28,8 @@ namespace UsingTask.UI
             FetchWithTaskButton.IsEnabled = false;
             CancelButton.IsEnabled = true;
             ClearListBox();
-            Task<List<Person>> peopleTask = repository.Get(tokenSource.Token);
+            Task<List<Person>> peopleTask = repository.Get(
+                progress, tokenSource.Token);
             peopleTask.ContinueWith(t =>
                 {
                     switch (t.Status)
@@ -58,7 +63,8 @@ namespace UsingTask.UI
             try
             {
                 ClearListBox();
-                List<Person> people = await repository.Get(tokenSource.Token);
+                List<Person> people = await repository.Get(
+                    progress, tokenSource.Token);
                 foreach (var person in people)
                     PersonListBox.Items.Add(person);
             }
@@ -90,6 +96,7 @@ namespace UsingTask.UI
 
         private void ClearListBox()
         {
+            ProgressTextBlock.Text = "";
             PersonListBox.Items.Clear();
         }
     }

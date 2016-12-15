@@ -9,12 +9,27 @@ using UsingTask.Shared;
 
 namespace UsingTask.Library
 {
+    public class PersonProgressData
+    {
+        public int Item { get; }
+        public int Total { get; }
+        public string Name { get; }
+
+        public PersonProgressData(int item, int total, string name)
+        {
+            Item = item;
+            Total = total;
+            Name = name;
+        }
+    }
+
     public class PersonRepository
     {
         public async Task<List<Person>> Get(
+            IProgress<PersonProgressData> progress,
             CancellationToken cancellationToken = new CancellationToken())
         {
-            await Task.Delay(3000);
+            //await Task.Delay(3000);
 
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -27,7 +42,15 @@ namespace UsingTask.Library
                 HttpResponseMessage response = await client.GetAsync("api/people", cancellationToken);
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadAsAsync<List<Person>>();
+                    var people = await response.Content.ReadAsAsync<List<Person>>();
+                    for (int i = 0; i < people.Count; i++)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        progress?.Report(new PersonProgressData(i + 1, people.Count,
+                            people[i].ToString()));
+                        await Task.Delay(300);
+                    }
+                    return people;
                 }
                 return new List<Person>();
             }
