@@ -12,7 +12,7 @@ namespace UsingTask.UI
     {
         PersonRepository repository = new PersonRepository();
         CancellationTokenSource tokenSource;
-        int count = 0;
+        //int count = 0;
 
         public MainWindow()
         {
@@ -21,7 +21,7 @@ namespace UsingTask.UI
 
         private IProgress<PersonProgressData> GetFreshProgress()
         {
-            count = 0;
+            int count = 0;
             return new Progress<PersonProgressData>(
                 d => ProgressTextBlock.Text =
                          $"Processing: (#{d.Item}) {++count} of {d.Total}\n {d.Name}");
