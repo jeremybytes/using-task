@@ -24,7 +24,7 @@ namespace UsingTask.UI
             count = 0;
             return new Progress<PersonProgressData>(
                 d => ProgressTextBlock.Text =
-                         $"Processing: {d.Item} of {d.Total}\n {d.Name}");
+                         $"Processing: (#{d.Item}) {++count} of {d.Total}\n {d.Name}");
         }
 
         private void FetchWithTaskButton_Click(object sender, RoutedEventArgs e)
