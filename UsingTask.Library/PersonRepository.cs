@@ -43,13 +43,20 @@ namespace UsingTask.Library
                 if (response.IsSuccessStatusCode)
                 {
                     var people = await response.Content.ReadAsAsync<List<Person>>();
+                    var tasks = new List<Task>();
                     for (int i = 0; i < people.Count; i++)
                     {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        progress?.Report(new PersonProgressData(i + 1, people.Count,
-                            people[i].ToString()));
-                        await Task.Delay(300);
+                        var index = i;
+                        var task = Task.Run(() =>
+                        {
+                            Thread.Sleep(10000/i);
+                            cancellationToken.ThrowIfCancellationRequested();
+                            progress?.Report(new PersonProgressData(index + 1, people.Count,
+                                people[index].ToString()));
+                        });
+                        tasks.Add(task);
                     }
+                    await Task.WhenAll(tasks.ToArray());
                     return people;
                 }
                 return new List<Person>();

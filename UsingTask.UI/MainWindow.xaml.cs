@@ -12,12 +12,17 @@ namespace UsingTask.UI
     {
         PersonRepository repository = new PersonRepository();
         CancellationTokenSource tokenSource;
-        IProgress<PersonProgressData> progress;
+        int count = 0;
 
         public MainWindow()
         {
             InitializeComponent();
-            progress = new Progress<PersonProgressData>(
+        }
+
+        private IProgress<PersonProgressData> GetFreshProgress()
+        {
+            count = 0;
+            return new Progress<PersonProgressData>(
                 d => ProgressTextBlock.Text =
                          $"Processing: {d.Item} of {d.Total}\n {d.Name}");
         }
@@ -29,7 +34,7 @@ namespace UsingTask.UI
             CancelButton.IsEnabled = true;
             ClearListBox();
             Task<List<Person>> peopleTask = repository.Get(
-                progress, tokenSource.Token);
+                GetFreshProgress(), tokenSource.Token);
             peopleTask.ContinueWith(t =>
                 {
                     switch (t.Status)
@@ -64,7 +69,7 @@ namespace UsingTask.UI
             {
                 ClearListBox();
                 List<Person> people = await repository.Get(
-                    progress, tokenSource.Token);
+                    GetFreshProgress(), tokenSource.Token);
                 foreach (var person in people)
                     PersonListBox.Items.Add(person);
             }
